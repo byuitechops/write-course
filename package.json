@@ -1,0 +1,26 @@
+{
+  "name": "write-course",
+  "version": "1.0.0",
+  "description": "Writes files from our course object to the hard drive, for our conversion tool.",
+  "main": "writeCourse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byuitechops/write-course.git"
+  },
+  "author": "Zachary Williams, Joshua McKinney, Daniel Green",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byuitechops/write-course/issues"
+  },
+  "homepage": "https://github.com/byuitechops/write-course#readme",
+  "dependencies": {
+    "async": "^2.5.0",
+    "cp": "^0.2.0",
+    "fs": "0.0.1-security",
+    "mkdirp": "^0.5.1",
+    "path": "^0.12.7"
+  }
+}
