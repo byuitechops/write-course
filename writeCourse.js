@@ -107,7 +107,7 @@ module.exports = (course, stepCallback) => {
     /* Return array of just our files paths */
     var pathsToBuild = course.content.map(file => {
         if (file.newPath) {
-            return file.newPath;
+            return path.dirname(file.newPath);
         } else {
             return path.dirname(file.path).replace('D2LProcessing', 'D2LProcessed');
         }
