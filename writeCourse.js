@@ -33,7 +33,11 @@ module.exports = (course, stepCallback) => {
         };
 
         function writeFile(file, cb2) {
-            fs.writeFile(file.path.replace('D2LProcessing', 'D2LProcessed'), 'utf8', writeError => {
+            var writePath = file.path.replace('D2LProcessing', 'D2LProcessed');
+            if (file.newPath) {
+                writePath = file.newPath;
+            }
+            fs.writeFile(writePath, 'utf8', writeError => {
                 if (writeError) {
                     course.throwErr('writeCourse', `${file.name} could not write | ${writeError}`);
                     cb2(null, true);
@@ -93,15 +97,6 @@ module.exports = (course, stepCallback) => {
                 callback(null);
             }
         });
-        // fs.mkdir(dirPath, (err) => {
-        //     if (err) {
-        //         course.throwErr('writeCourse', err);
-        //         callback(err);
-        //     } else {
-        //         course.success(`writeCourse`, `${dirPath} successfully created.`);
-        //         callback(null);
-        //     }
-        // });
     }
 
     /* Start Here */
