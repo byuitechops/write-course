@@ -74,8 +74,11 @@ module.exports = (course, stepCallback) => {
         };
 
         function copyFile(file, cb2) {
-            var newPath = file.path.replace('D2LProcessing', 'D2LProcessed');
-            cp(file.path, newPath, (err) => {
+            var writePath = file.path.replace('D2LProcessing', 'D2LProcessed');
+            if (file.newPath) {
+                writePath = file.newPath;
+            }
+            cp(file.path, writePath, (err) => {
                 if (err) {
                     course.throwErr('writeCourse', `${file.name} could not copy | ${err}`);
                 } else {
@@ -105,17 +108,6 @@ module.exports = (course, stepCallback) => {
     var pathsToBuild = course.content.map(file => {
         return path.dirname(file.path).replace('D2LProcessing', 'D2LProcessed');
     });
-    /* Return just the unique values of our paths,
-    so we know what directories we need to make */
-// //    pathsToBuild = [...new Set(pathsToBuild)];
-//     var pathArray =[];
-//     pathsToBuild.forEach((filePath) => {
-//         filePath.split(path.sep).forEach((fileDir) => {
-//             if (!pathArray.includes(fileDir)){
-//                 pathArray.push(fileDir);
-//             }
-//         });
-//     });
 
     /* Sort them alphabetically so we make sure we
     create the right folders first */
