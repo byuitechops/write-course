@@ -45,6 +45,7 @@ module.exports = (course, stepCallback) => {
                     course.success(
                         'writeCourse', `${file.name} was successfully written.`
                     );
+                    console.log(writePath);
                     cb2(null, false);
                 }
             });
