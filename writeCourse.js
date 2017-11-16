@@ -37,7 +37,7 @@ module.exports = (course, stepCallback) => {
             if (file.newPath) {
                 writePath = file.newPath;
             }
-            fs.writeFile(writePath, 'utf8', writeError => {
+            fs.writeFile(writePath, file.dom.xml(), 'utf8', writeError => {
                 if (writeError) {
                     course.throwErr('writeCourse', `${file.name} could not write | ${writeError}`);
                     cb2(null, true);
