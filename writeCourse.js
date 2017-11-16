@@ -106,7 +106,11 @@ module.exports = (course, stepCallback) => {
     course.addModuleReport('writeCourse');
     /* Return array of just our files paths */
     var pathsToBuild = course.content.map(file => {
-        return path.dirname(file.path).replace('D2LProcessing', 'D2LProcessed');
+        if (file.newPath) {
+            return file.newPath;
+        } else {
+            return path.dirname(file.path).replace('D2LProcessing', 'D2LProcessed');
+        }
     });
 
     /* Sort them alphabetically so we make sure we
