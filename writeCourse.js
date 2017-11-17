@@ -23,7 +23,9 @@ module.exports = (course, stepCallback) => {
             }
             if (writeCount === 10) {
                 course.throwErr('writeCourse', 'Reached write file attempt limit (10).');
-                course.throwErr('writeCourse', 'Files not written: ${results}');
+                results.forEach(file => {
+                    course.throwErr('writeCourse', `File not written: ${file.name}`);
+                });
             }
             if (results.length === 0) {
                 course.success('writeCourse', 'All editable files successfully written.');
