@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/byuitechops/write-course#readme",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.0",
     "cp": "^0.2.0",
     "fs": "0.0.1-security",
     "mkdirp": "^0.5.1",

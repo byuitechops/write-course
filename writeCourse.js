@@ -115,6 +115,9 @@ module.exports = (course, stepCallback) => {
         }
     });
 
+    /* Unique the array */
+    pathsToBuild = [...new Set(pathsToBuild)];
+
     /* Sort them alphabetically so we make sure we
     create the right folders first */
     pathArray = pathsToBuild.sort();
