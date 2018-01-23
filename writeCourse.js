@@ -22,13 +22,13 @@ module.exports = (course, stepCallback) => {
                 return;
             }
             if (writeCount === 10) {
-                course.throwErr('writeCourse', 'Reached write file attempt limit (10).');
+                course.error('Reached write file attempt limit (10).');
                 results.forEach(file => {
-                    course.throwErr('writeCourse', `File not written: ${file.name}`);
+                    course.error(`File not written: ${file.name}`);
                 });
             }
             if (results.length === 0) {
-                course.success('writeCourse', 'All editable files successfully written.');
+                course.message('All editable files successfully written.');
             }
             /* Errors are never passed through from the filter, since it is a filter */
             cb1(null);
@@ -41,12 +41,13 @@ module.exports = (course, stepCallback) => {
             }
             fs.writeFile(writePath, file.dom.xml(), 'utf8', writeError => {
                 if (writeError) {
-                    course.throwErr('writeCourse', `${file.name} could not write | ${writeError}`);
+                    course.error(writeError)
                     cb2(null, true);
                 } else {
-                    course.success(
-                        'writeCourse', `${file.name} was successfully written.`
-                    );
+                    course.log('Files Written', {
+                        'Name': file.name,
+                        'Path': writePath
+                    });
                     cb2(null, false);
                 }
             });
@@ -63,13 +64,13 @@ module.exports = (course, stepCallback) => {
                 return;
             }
             if (copyCount === 10) {
-                course.throwErr('writeCourse', 'Reached copy file attempt limit (10).');
+                course.error('Reached copy file attempt limit (10).');
                 results.forEach(file => {
-                    course.throwErr('writeCourse', `File not copied: ${file.name}`);
+                    course.error(`File not copied: ${file.name}`);
                 });
             }
             if (results.length === 0) {
-                course.success('writeCourse', 'All binary files successfully copied.');
+                course.message('All binary files successfully copied.');
             }
             /* Errors are never passed through from the filter, since it is a filter */
             cb1(null);
@@ -82,9 +83,13 @@ module.exports = (course, stepCallback) => {
             }
             cp(file.path, writePath, (err) => {
                 if (err) {
-                    course.throwErr('writeCourse', `${file.name} could not copy | ${err}`);
+                    course.error(err);
                 } else {
-                    course.success('writeCourse', `${file.name} was successfully copied.`);
+                    course.log('Files Copied', {
+                        'Name': file.name,
+                        'From': file.path,
+                        'To': writePath
+                    });
                     cb2(null, false);
                 }
             });
@@ -95,17 +100,18 @@ module.exports = (course, stepCallback) => {
     function createDir(dirPath, callback) {
         mkdirp(dirPath, (err) => {
             if (err) {
-                course.throwErr('writeCourse', err);
+                course.error(err);
                 callback(err);
             } else {
-                course.success(`writeCourse`, `${dirPath} successfully created.`);
+                course.log('Directories Written', {
+                    'Directory Path': dirPath 
+                });
                 callback(null);
             }
         });
     }
 
     /* Start Here */
-    course.addModuleReport('writeCourse');
     /* Return array of just our files paths */
     var pathsToBuild = course.content.map(file => {
         if (file.newPath) {
@@ -124,8 +130,7 @@ module.exports = (course, stepCallback) => {
     /* Create the directories we need, one at a time */
     asyncLib.eachSeries(pathArray, createDir, createDirErr => {
         if (createDirErr) {
-            console.log(createDirErr);
-            course.throwFatalErr('writeCourse', createDirErr);
+            course.fatalError(createDirErr);
             stepCallback(createDirErr, course);
         } else {
             var writableFiles = course.content.filter(file => file.canEdit);
