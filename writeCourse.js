@@ -35,7 +35,7 @@ module.exports = (course, stepCallback) => {
         };
 
         function writeFile(file, cb2) {
-            var writePath = file.path.replace('D2LProcessing', 'D2LProcessed');
+            var writePath = file.path.replace('unzipped', 'processed');
             if (file.newPath) {
                 writePath = file.newPath;
             }
@@ -77,7 +77,7 @@ module.exports = (course, stepCallback) => {
         };
 
         function copyFile(file, cb2) {
-            var writePath = file.path.replace('D2LProcessing', 'D2LProcessed');
+            var writePath = file.path.replace('unzipped', 'processed');
             if (file.newPath) {
                 writePath = file.newPath;
             }
@@ -104,7 +104,7 @@ module.exports = (course, stepCallback) => {
                 callback(err);
             } else {
                 course.log('Directories Written', {
-                    'Directory Path': dirPath 
+                    'Directory Path': dirPath
                 });
                 callback(null);
             }
@@ -117,7 +117,7 @@ module.exports = (course, stepCallback) => {
         if (file.newPath) {
             return path.dirname(file.newPath);
         } else {
-            return path.dirname(file.path).replace('D2LProcessing', 'D2LProcessed');
+            return path.dirname(file.path).replace('unzipped', 'processed');
         }
     });
 
