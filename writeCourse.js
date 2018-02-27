@@ -1,5 +1,4 @@
 /*eslint-env node, es6*/
-/*eslint no-console:1*/
 
 /* Put dependencies here */
 var path = require('path'),
@@ -41,7 +40,7 @@ module.exports = (course, stepCallback) => {
             }
             fs.writeFile(writePath, file.dom.xml(), 'utf8', writeError => {
                 if (writeError) {
-                    course.error(writeError)
+                    course.error(writeError);
                     cb2(null, true);
                 } else {
                     course.log('Files Written', {
@@ -126,7 +125,7 @@ module.exports = (course, stepCallback) => {
 
     /* Sort them alphabetically so we make sure we
     create the right folders first */
-    pathArray = pathsToBuild.sort();
+    var pathArray = pathsToBuild.sort();
     /* Create the directories we need, one at a time */
     asyncLib.eachSeries(pathArray, createDir, createDirErr => {
         if (createDirErr) {
