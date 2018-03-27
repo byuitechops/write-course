@@ -22,5 +22,6 @@
     "fs": "0.0.1-security",
     "mkdirp": "^0.5.1",
     "path": "^0.12.7"
-  }
+  },
+  "childType": "shell"
 }
