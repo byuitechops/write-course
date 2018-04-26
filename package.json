@@ -19,9 +19,7 @@
   "dependencies": {
     "async": "^2.6.0",
     "cp": "^0.2.0",
-    "fs": "0.0.1-security",
-    "mkdirp": "^0.5.1",
-    "path": "^0.12.7"
+    "mkdirp": "^0.5.1"
   },
   "childType": "shell"
 }
